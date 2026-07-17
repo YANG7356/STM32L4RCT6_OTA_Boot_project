@@ -536,6 +536,11 @@
           <GroupName>My_Hardware</GroupName>
           <Files>
             <File>
+              <FileName>partition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\My_Hardware\partition.h</FilePath>
+            </File>
+            <File>
               <FileName>bootloader.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\My_Hardware\bootloader.c</FilePath>
@@ -554,11 +559,6 @@
               <FileName>internal_flash.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\My_Hardware\internal_flash.h</FilePath>
-            </File>
-            <File>
-              <FileName>partition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\My_Hardware\partition.h</FilePath>
             </File>
             <File>
               <FileName>zd25wq32.c</FileName>

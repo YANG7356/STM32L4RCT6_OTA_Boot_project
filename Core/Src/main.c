@@ -31,6 +31,7 @@
 #include "zd25wq32.h"
 #include "internal_flash.h"
 #include "test_code.h"
+#include "bootloader.h"
 
 /* USER CODE END Includes */
 
@@ -101,16 +102,16 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
   
-  
   HAL_UARTEx_ReceiveToIdle_DMA(&huart1, RxBuff, RX_LENGTH); // 先打开一次DMA串口空闲中断 
+  
+  HAL_Delay(100);
   
   printf("This is Bootloader_project\r\n");
   
   ZD25WQ32_Init(); // 外部Flash初始化
-  
-  Bootloader_Run(); 
 
-
+  Bootloader_Run();
+ 
   /* USER CODE END 2 */
 
   /* Infinite loop */

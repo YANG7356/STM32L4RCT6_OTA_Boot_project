@@ -36,3 +36,4 @@ bootloader_project\bootloader.o: ..\My_Hardware\internal_flash.h
 bootloader_project\bootloader.o: ..\My_Hardware\ota_crc.h
 bootloader_project\bootloader.o: ..\My_Hardware\zd25wq32.h
 bootloader_project\bootloader.o: D:\Keil5\ARM\ARMCC\Bin\..\include\string.h
+bootloader_project\bootloader.o: D:\Keil5\ARM\ARMCC\Bin\..\include\stdio.h

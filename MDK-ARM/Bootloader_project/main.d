@@ -41,3 +41,4 @@ bootloader_project\main.o: ../My_Hardware/zd25wq32.h
 bootloader_project\main.o: ../My_Hardware/internal_flash.h
 bootloader_project\main.o: ../My_Hardware/partition.h
 bootloader_project\main.o: ../My_Hardware/test_code.h
+bootloader_project\main.o: ../My_Hardware/bootloader.h

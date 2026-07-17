@@ -3,6 +3,7 @@
 #include "ota_crc.h"
 #include "zd25wq32.h"
 #include <string.h>
+#include <stdio.h>
 
 /* APP 入口函数类型 */
 typedef void (*pFunction)(void);
@@ -108,19 +109,30 @@ HAL_StatusTypeDef Bootloader_InitParamArea(void)
  */
 uint8_t Bootloader_IsAppValid(void)
 {
-    uint32_t app_sp    = *(__IO uint32_t *)APP_ADDR;          //初始化指针
-    uint32_t app_reset = *(__IO uint32_t *)(APP_ADDR + 4U);
+//    uint32_t app_sp    = *(__IO uint32_t *)APP_ADDR;          //初始化指针
+//    uint32_t app_reset = *(__IO uint32_t *)(APP_ADDR + 4U);
 
-    /* 栈顶是否落在 SRAM 区
-       经典判断方式，适合 Cortex-M */
+//    /* 栈顶是否落在 SRAM 区
+//       经典判断方式，适合 Cortex-M */
+//    if ((app_sp & 0x2FFE0000U) != 0x20000000U)
+//        return 0;
+
+//    /* 复位向量是否落在 APP 分区 */
+//    if ((app_reset < APP_ADDR) || (app_reset > APP_END))
+//        return 0;
+
+//    return 1;
+    
+    uint32_t app_sp       = *(__IO uint32_t *)APP_ADDR;
+    uint32_t app_reset    = *(__IO uint32_t *)(APP_ADDR + 4U);
+    uint32_t app_reset_pc = app_reset & 0xFFFFFFFEU;
     if ((app_sp & 0x2FFE0000U) != 0x20000000U)
         return 0;
-
-    /* 复位向量是否落在 APP 分区 */
-    if ((app_reset < APP_ADDR) || (app_reset > APP_END))
+    if ((app_reset & 0x1U) == 0U)
         return 0;
-
-    return 1;
+    if ((app_reset_pc < APP_ADDR) || (app_reset_pc > APP_END))
+        return 0;
+    return 1;    
 }
 
 /**
@@ -221,7 +233,11 @@ void Bootloader_JumpToApp(void)
     SCB->VTOR = APP_ADDR;
 
     /* 设置 MSP 为 APP 栈顶 */
+    __DSB();
+    __ISB();
     __set_MSP(app_stack);
+    __DSB();
+    __ISB();
 
     /* 跳转到 APP Reset_Handler */
     JumpToApplication();
