@@ -109,7 +109,17 @@ int main(void)
   printf("This is Bootloader_project\r\n");
   
   ZD25WQ32_Init(); // 外部Flash初始化
+  
+  Param_t param;
+  memcpy(&param, (void *)PARAM_ADDR, sizeof(Param_t));
 
+    printf("param.magic      = 0x%08lX\r\n", param.magic);
+    printf("param.status     = %lu\r\n", param.status);
+    printf("param.fw_size    = %lu\r\n", param.fw_size);
+    printf("param.fw_crc     = 0x%08lX\r\n", param.fw_crc);
+    printf("param.fw_version = %lu\r\n", param.fw_version);
+
+    printf("\r\n");
   Bootloader_Run();
  
   /* USER CODE END 2 */
